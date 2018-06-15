@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tibetan Vines</string>
+    <string name="registerusername">Username</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">Password</string>
+    <string name="register_button">Register</string>
+    <string name="login_register">Login</string>
+    <string name="regemail">Email</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_mainmenu">Search</string>
+    <string name="setting_main">Setting</string>
+    <string name="logout_main">Logout</string>
+    <string name="login_login">login</string>
+</resources>

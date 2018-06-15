@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "285653761514",
+    "firebase_url": "https://tempapp-20153.firebaseio.com",
+    "project_id": "tempapp-20153",
+    "storage_bucket": "tempapp-20153.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285653761514:android:7933f16851a60a8f",
+        "android_client_info": {
+          "package_name": "com.blogspot.techtibet.tempapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285653761514-ik06chdf6uigrun66snv6bor17q3q0ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blogspot.techtibet.tempapp",
+            "certificate_hash": "1e726dfaf357a078e0ad14de05d2bd0516a90419"
+          }
+        },
+        {
+          "client_id": "285653761514-celfa277r4buvf7j4e3f4bpusmtimgsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoriz6uvY1lwcaULuR8z6wb2aZS4r6IUs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285653761514-celfa277r4buvf7j4e3f4bpusmtimgsm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

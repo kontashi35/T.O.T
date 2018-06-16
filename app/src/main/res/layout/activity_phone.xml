@@ -28,7 +28,8 @@
             android:id="@+id/imageView"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_phone" />
+            app:srcCompat="@mipmap/ic_phone"
+            android:contentDescription="@string/activty_verify_phone"/>
 
         <EditText
             android:id="@+id/phoneno"
@@ -37,7 +38,7 @@
             android:layout_weight="8"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
-            android:hint="Enter phone no"
+            android:hint="@string/enter_phone_no"
             android:inputType="phone"
             android:textColor="@android:color/white"
             android:textColorHint="@color/hintColor" />
@@ -65,7 +66,8 @@
             android:id="@+id/imageView2"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_verify" />
+            app:srcCompat="@mipmap/ic_verify"
+            android:contentDescription="@string/verify_code_image"/>
 
         <EditText
             android:id="@+id/verificationcode"
@@ -73,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="9"
             android:backgroundTint="@color/colorAccent"
-            android:hint="type verification code"
+            android:hint="@string/phone_type_verification_code"
             android:inputType="phone"
             android:textColor="@android:color/white"
             android:textColorHint="@color/hintColor" />
@@ -95,7 +97,7 @@
         android:layout_centerVertical="true"
         android:layout_weight="9"
         android:background="@drawable/btn_bg"
-        android:text="Send code "
+        android:text="@string/phone_send_code"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
@@ -106,7 +108,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/linearLayout"
         android:layout_marginTop="89dp"
-        android:text="Login or register with phone"
+        android:text="@string/login_or_register_with_phone"
         android:textColor="@android:color/white"
         android:textSize="20sp"/>
 

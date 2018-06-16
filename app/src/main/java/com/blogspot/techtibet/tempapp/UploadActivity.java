@@ -153,7 +153,6 @@ public class UploadActivity extends AppCompatActivity {
             mUploadBtn.setText("Select file to upload");
         }
         if(requestCode==FILE_CODE && resultCode==RESULT_OK){
-            mProgressLayout.setVisibility(View.VISIBLE);
             Uri fileUri=data.getData();
             String uriString=fileUri.toString();
             File myFile=new File(uriString);
@@ -173,77 +172,86 @@ public class UploadActivity extends AppCompatActivity {
             }else if(uriString.startsWith("file://")){
                 displayName=myFile.getName();
             }
-            mFilename.setText(displayName);
-            StorageReference mFileStorage=mStorage.child("files/"+displayName);
-            mStorageTask=mFileStorage.putFile(fileUri).addOnSuccessListener(this,new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final String downloadurl=taskSnapshot.getDownloadUrl().toString();
 
-                StorageReference mThumbStorage=mStorage.child("thumbnail/"+displayName);
-                mThumbStorage.putFile(thumbUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            if(displayName.endsWith(".jpg") || displayName.endsWith(".png") || displayName.endsWith(".jpeg")){
+                Toast.makeText(this, "Please select video file to upload.", Toast.LENGTH_SHORT).show();
+                mUploadBtn.setEnabled(true);
+            }else{
+                mProgressLayout.setVisibility(View.VISIBLE);
+                mFilename.setText(displayName);
+                StorageReference mFileStorage=mStorage.child("files/"+displayName);
+                mStorageTask=mFileStorage.putFile(fileUri).addOnSuccessListener(this,new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String finalDisplayName=displayName;
-                        if(finalDisplayName.indexOf(".")>0){
-                            finalDisplayName=finalDisplayName.substring(0,finalDisplayName.lastIndexOf("."));
+                        final String downloadurl=taskSnapshot.getDownloadUrl().toString();
 
-                        }
+                        StorageReference mThumbStorage=mStorage.child("thumbnail/"+displayName);
+                        mThumbStorage.putFile(thumbUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                String finalDisplayName=displayName;
+                                if(finalDisplayName.indexOf(".")>0){
+                                    finalDisplayName=finalDisplayName.substring(0,finalDisplayName.lastIndexOf("."));
 
-                        String thumbDownloadurl=taskSnapshot.getDownloadUrl().toString();
-                        String uploader="";
-                        Date date=new Date();
-                        DateFormat formatdate=new SimpleDateFormat("dd-MM-yyyy");
-                        String strDate=formatdate.format(date);
+                                }
 
-                        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                        if(!user.getEmail().isEmpty()){
-                            uploader=user.getEmail();
-                        }else{
-                            uploader=user.getPhoneNumber();
-                        }
+                                String thumbDownloadurl=taskSnapshot.getDownloadUrl().toString();
+                                String uploader="";
+                                Date date=new Date();
+                                DateFormat formatdate=new SimpleDateFormat("dd-MM-yyyy");
+                                String strDate=formatdate.format(date);
 
-                        Map<String,Object> map=new HashMap<>();
-                        map.put("video_url",downloadurl);
-                        map.put("video_name", finalDisplayName);
-                        map.put("time",strDate);
-                        map.put("user",uploader);
-                        map.put("thumb_url",thumbDownloadurl);
-                        map.put("view_count",0);
-                        map.put("real_time", FieldValue.serverTimestamp());
-                        mStore.collection("Files").add(map).addOnFailureListener(new OnFailureListener() {
+                                FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                                if(!user.getEmail().isEmpty()){
+                                    uploader=user.getEmail();
+                                }else{
+                                    uploader=user.getPhoneNumber();
+                                }
+
+                                Map<String,Object> map=new HashMap<>();
+                                map.put("video_url",downloadurl);
+                                map.put("video_name", finalDisplayName);
+                                map.put("time",strDate);
+                                map.put("user",uploader);
+                                map.put("thumb_url",thumbDownloadurl);
+                                map.put("view_count",0);
+                                map.put("real_time", FieldValue.serverTimestamp());
+                                mStore.collection("Files").add(map).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                sendToMain();
+                                Toast.makeText(UploadActivity.this, "uploaded succesful", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(UploadActivity.this,new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                        sendToMain();
-                        Toast.makeText(UploadActivity.this, "uploaded succesful", Toast.LENGTH_SHORT).show();
-
                     }
-                }).addOnFailureListener(UploadActivity.this,new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }).addOnProgressListener(this,new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress=(100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                        mProgress.setProgress((int) progress);
+                        String mBprogress=taskSnapshot.getBytesTransferred()/(1024*1024)+"/"+taskSnapshot.getTotalByteCount()/(1024*1024)+"mb";
+                        mSpaceMb.setText(mBprogress);
+                        mPerc.setText((int) progress+"%");
                     }
                 });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
 
-                }
-            }).addOnProgressListener(this,new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress=(100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                    mProgress.setProgress((int) progress);
-                    String mBprogress=taskSnapshot.getBytesTransferred()/(1024*1024)+"/"+taskSnapshot.getTotalByteCount()/(1024*1024)+"mb";
-                    mSpaceMb.setText(mBprogress);
-                    mPerc.setText((int) progress+"%");
-                }
-            });
+
         }
 
         super.onActivityResult(requestCode, resultCode, data);

@@ -57,7 +57,7 @@
             android:background="@color/colorPrimary">
             <TextView
                 android:id="@+id/play_video_name"
-                android:layout_width="250dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="5dp"

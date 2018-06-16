@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainRecycler=findViewById(R.id.main_recycler);
         mToolbar=findViewById(R.id.maintoolbar);
+        mToolbar.setLogo(R.mipmap.ic_mainlogo);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Home");
         videoList=new ArrayList<>();

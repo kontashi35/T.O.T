@@ -44,8 +44,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="outputName" value="ic_verify" />
+                                      <entry key="imageAsset" value="C:\Users\WS7\Desktop\mainlogo.png" />
+                                      <entry key="outputName" value="ic_mainlogo" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -64,6 +66,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>

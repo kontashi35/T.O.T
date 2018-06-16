@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="52dp"
         android:fontFamily="@font/adamina"
-        android:text="Upload Video File"
+        android:text="@string/upload_video_file"
         android:textColor="@android:color/white"
         android:textSize="24dp" />
 
@@ -30,7 +30,7 @@
         android:background="@drawable/uploadbtn"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Upload Thumbnail"
+        android:text="@string/upload_thumbnail_activity"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
@@ -53,15 +53,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="Your File is uploading" />
+            android:text="@string/your_file_is_uploading" />
 
         <TextView
             android:id="@+id/upload_name_text"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="filename.type" />
+            android:text="@string/filename_type_name" />
 
         <ProgressBar
             android:id="@+id/upload_progress_bar"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="0/0" />
+                android:text="@string/_0_0_upload" />
 
             <TextView
                 android:id="@+id/upload_perc"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="0%" />
+                android:text="@string/_0_text_upload" />
         </LinearLayout>
 
         <Button
@@ -102,7 +102,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="@drawable/pauseplaybtn"
-            android:text="Pause Upload"
+            android:text="@string/pause_upload_activity"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary" />
 
@@ -113,7 +113,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:background="@drawable/cancel_btn"
-            android:text="Cancel Upload"
+            android:text="@string/cancel_upload_activity"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
@@ -125,7 +125,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="195dp"
-        android:text="We recommend you to upload short\nvideo for better experiences"
+        android:text="@string/we_recommend_you_to_upload_short_nvideo_for_better_experiences"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
 </RelativeLayout>

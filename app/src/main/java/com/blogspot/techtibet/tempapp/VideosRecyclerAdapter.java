@@ -2,6 +2,7 @@ package com.blogspot.techtibet.tempapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 
 import java.util.List;
@@ -37,7 +39,8 @@ class VideosRecyclerAdapter extends RecyclerView.Adapter<VideosRecyclerAdapter.V
         final String vdate=videosList.get(position).getTime();
         String thumburl=videosList.get(position).getThumb_url();
         final long viewCount=videosList.get(position).getView_count();
-        holder.mViewCount.setText(viewCount+" views");
+        Resources res=context.getResources();
+        holder.mViewCount.setText(viewCount+" "+res.getText(R.string.view_count_text));
         final String videoId=videosList.get(position).videosId;
         holder.setImg(thumburl);
         holder.mVideoName.setText(vname);
@@ -88,7 +91,9 @@ class VideosRecyclerAdapter extends RecyclerView.Adapter<VideosRecyclerAdapter.V
 
         public void setImg(String thumburl) {
 
-            Glide.with(context).load(thumburl).placeholder(R.drawable.vinelogo).into(mVideoImg);
+            RequestOptions options=new RequestOptions();
+            options.placeholder(R.drawable.vinelogo);
+            Glide.with(context).setDefaultRequestOptions(options).load(thumburl).into(mVideoImg);
         }
     }
 }

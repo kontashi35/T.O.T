@@ -2,6 +2,7 @@ package com.blogspot.techtibet.tempapp;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     private Button mResendBtn;
     private Toolbar mToolbar;
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         mStore=FirebaseFirestore.getInstance();
         mToolbar=findViewById(R.id.logintoolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setTitle(R.string.login_text);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mEmail=(EditText)findViewById(R.id.loginemail);
         mPassword=(EditText)findViewById(R.id.loginpass);
@@ -56,8 +61,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mProgress.setTitle("Logging in");
-        mProgress.setMessage("Wait while processing");
+        mProgress.setTitle(R.string.loggin_in_text);
+        String msg=getString(R.string.wait_while_loggin_in_text);
+        mProgress.setMessage(msg);
 
         mLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +83,13 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 }else{
-                                    Toast.makeText(LoginActivity.this, "Please verify email to log in", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, R.string.please_verify_email, Toast.LENGTH_SHORT).show();
                                     mAuth.signOut();
                                 }
 
                                 mProgress.dismiss();
                             }else{
-                                Toast.makeText(LoginActivity.this,"Login error:"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this,R.string.login_error_text+task.getException().getMessage(),Toast.LENGTH_LONG).show();
                                 mProgress.dismiss();
                             }
 
@@ -91,13 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginActivity.this,"Login error:"+e.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this,R.string.login_error_text+e.getMessage(),Toast.LENGTH_LONG).show();
                             mProgress.dismiss();
                         }
                     });
 
                 }else{
-                    Toast.makeText(LoginActivity.this,"please fill empty field",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,R.string.dont_leave_empty,Toast.LENGTH_LONG).show();
                 }
             }
         });

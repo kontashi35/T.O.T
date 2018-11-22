@@ -1,5 +1,6 @@
 package com.blogspot.techtibet.tempapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,10 @@ public class PhoneActivity extends AppCompatActivity {
     String mS;
     PhoneAuthProvider.ForceResendingToken mForceResendingToken;
      PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,7 @@ public class PhoneActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         mToolbar=findViewById(R.id.phone_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Phone");
+        getSupportActionBar().setTitle(R.string.phone);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mVerifyLayot=(LinearLayout)findViewById(R.id.verificationlayot);
@@ -82,19 +86,19 @@ public class PhoneActivity extends AppCompatActivity {
                        }
                    }else{
 
-                       Toast.makeText(PhoneActivity.this, "verifying", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(PhoneActivity.this, R.string.verify_text, Toast.LENGTH_SHORT).show();
 
                        if(!TextUtils.isEmpty(code)){
                            mProgressVerify.setVisibility(View.VISIBLE);
                            PhoneAuthCredential phoneAuthCredential=PhoneAuthProvider.getCredential(mS,code);
                            signInWithPhoneAuthCredential(phoneAuthCredential);
                        }else{
-                           Toast.makeText(PhoneActivity.this, "Enter the code to verify", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(PhoneActivity.this, R.string.enter_verify_code, Toast.LENGTH_SHORT).show();
                        }
 
                    }
                }else{
-                   Toast.makeText(PhoneActivity.this, "Please,fill out the empty filed", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(PhoneActivity.this, R.string.dont_leave_empty, Toast.LENGTH_SHORT).show();
                }
 
 
@@ -120,10 +124,10 @@ public class PhoneActivity extends AppCompatActivity {
             public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
                 mProgres.setVisibility(View.INVISIBLE);
-                mSendBtn.setText("Verify Code");
+                mSendBtn.setText(R.string.verify_code);
                 mVerifyLayot.setVisibility(View.VISIBLE);
                 mPhoneNo.setEnabled(true);
-                Toast.makeText(PhoneActivity.this, "code sent", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhoneActivity.this, R.string.code_sent, Toast.LENGTH_SHORT).show();
                 btnType=1;
                 mS=s;
                 mForceResendingToken=forceResendingToken;

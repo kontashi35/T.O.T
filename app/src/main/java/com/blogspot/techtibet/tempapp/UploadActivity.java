@@ -1,8 +1,10 @@
 package com.blogspot.techtibet.tempapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,13 +15,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,8 +44,10 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UploadActivity extends AppCompatActivity {
@@ -59,13 +68,22 @@ public class UploadActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     String displayName=null;
     Uri thumbUri;
+    private Spinner mSpinner;
+    ArrayAdapter<String> arrayAdapter;
+    List<String> list;
+    int typeInt;
 
 
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
         mStore=FirebaseFirestore.getInstance();
         mUploadBtn=findViewById(R.id.upload_btn);
         mPausePlayBtn=findViewById(R.id.pause_upload);
@@ -77,18 +95,44 @@ public class UploadActivity extends AppCompatActivity {
         mStorage= FirebaseStorage.getInstance().getReference();
         mProgressLayout=findViewById(R.id.progress_layout);
         uploadLayout=findViewById(R.id.uploadlayout);
+        mSpinner=findViewById(R.id.spinner_btn);
         mAuth=FirebaseAuth.getInstance();
+        list=new ArrayList<>();
+        String type=getString(R.string.select_file_type);
+        String song=getString(R.string.upload_song);
+        String comedy=getString(R.string.upload_comedy);
+        list.add(type);
+        list.add(song);
+        list.add(comedy);
+        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,list);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(arrayAdapter);
 
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                typeInt=mSpinner.getSelectedItemPosition();
+                if(typeInt!=0){
+                    mUploadBtn.setVisibility(View.VISIBLE);
+                    mSpinner.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String status=mUploadBtn.getText().toString();
-                if(status.equals("Upload Thumbnail")){
+                if(status.equals(getString(R.string.upload_thumbnail_activity))){
                     uploadThumbnail();
 
-                }else if(status.equals("Select file to upload")){
+                }else if(status.equals(getString(R.string.select_file_to_upload))){
                     mUploadBtn.setEnabled(false);
                     uploadFile();
                 }
@@ -98,12 +142,12 @@ public class UploadActivity extends AppCompatActivity {
         mPausePlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mPausePlayBtn.getText().toString().equals("Pause Upload")){
+                if(mPausePlayBtn.getText().toString().equals(R.string.pause_upload_activity)){
                     mStorageTask.pause();
-                    mPausePlayBtn.setText("Resume Upload");
-                }else if(mPausePlayBtn.getText().toString().equals("Resume Upload")){
+                    mPausePlayBtn.setText(R.string.resume_upload_activity);
+                }else if(mPausePlayBtn.getText().toString().equals(R.string.resume_upload_activity)){
                     mStorageTask.resume();
-                    mPausePlayBtn.setText("Pause Upload");
+                    mPausePlayBtn.setText(R.string.pause_upload_activity);
                 }
 
             }
@@ -112,6 +156,7 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mStorageTask.cancel();
+                mStorage.child("files/"+displayName).delete();
                 sendToMain();
                 mProgressLayout.setVisibility(View.INVISIBLE);
             }
@@ -149,8 +194,8 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==PICK_IMAGE && resultCode==RESULT_OK){
             thumbUri=data.getData();
-            Snackbar.make(uploadLayout,"Thumbnail, Uploaded successfully",Snackbar.LENGTH_SHORT).show();
-            mUploadBtn.setText("Select file to upload");
+            Snackbar.make(uploadLayout,R.string.thumbnail_uploaded_succeed,Snackbar.LENGTH_SHORT).show();
+            mUploadBtn.setText(R.string.select_file_to_upload);
         }
         if(requestCode==FILE_CODE && resultCode==RESULT_OK){
             Uri fileUri=data.getData();
@@ -174,18 +219,28 @@ public class UploadActivity extends AppCompatActivity {
             }
 
             if(displayName.endsWith(".jpg") || displayName.endsWith(".png") || displayName.endsWith(".jpeg")){
-                Toast.makeText(this, "Please select video file to upload.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.select_video_file_to_upload, Toast.LENGTH_SHORT).show();
                 mUploadBtn.setEnabled(true);
             }else{
                 mProgressLayout.setVisibility(View.VISIBLE);
                 mFilename.setText(displayName);
                 StorageReference mFileStorage=mStorage.child("files/"+displayName);
+                if(fileUri==null){
+                    fileUri=thumbUri;
+                }
                 mStorageTask=mFileStorage.putFile(fileUri).addOnSuccessListener(this,new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        final String downloadurl=taskSnapshot.getDownloadUrl().toString();
+                         String downloadurl="";
+                        try{
+                            downloadurl=taskSnapshot.getDownloadUrl().toString();
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
                         StorageReference mThumbStorage=mStorage.child("thumbnail/"+displayName);
+                        final String finalDownloadurl = downloadurl;
                         mThumbStorage.putFile(thumbUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -203,27 +258,39 @@ public class UploadActivity extends AppCompatActivity {
 
                                 FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
                                 if(!user.getEmail().isEmpty()){
-                                    uploader=user.getEmail();
-                                }else{
-                                    uploader=user.getPhoneNumber();
+                                    uploader=user.getEmail().substring(0,user.getEmail().indexOf("@"));
+                                }else if(!user.getPhoneNumber().isEmpty()){
+                                    uploader=user.getPhoneNumber().substring(0,5)+"****"+user.getPhoneNumber().substring(9,user.getPhoneNumber().length());
                                 }
 
                                 Map<String,Object> map=new HashMap<>();
-                                map.put("video_url",downloadurl);
+                                map.put("video_url", finalDownloadurl);
                                 map.put("video_name", finalDisplayName);
                                 map.put("time",strDate);
                                 map.put("user",uploader);
                                 map.put("thumb_url",thumbDownloadurl);
                                 map.put("view_count",0);
                                 map.put("real_time", FieldValue.serverTimestamp());
-                                mStore.collection("Files").add(map).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                if(typeInt==1){
+                                    map.put("type","song");
+                                    mStore.collection("Song").add(map).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }else if(typeInt==2){
+                                    map.put("type","comedy");
+                                    mStore.collection("Comedy").add(map).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(UploadActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+
                                 sendToMain();
-                                Toast.makeText(UploadActivity.this, "uploaded succesful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UploadActivity.this, R.string.video_upload_successfully, Toast.LENGTH_SHORT).show();
 
                             }
                         }).addOnFailureListener(UploadActivity.this,new OnFailureListener() {

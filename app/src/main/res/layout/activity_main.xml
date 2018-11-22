@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,23 +9,44 @@
     tools:context="com.blogspot.techtibet.tempapp.MainActivity">
 
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/maintoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_recycler"
+    <FrameLayout
+        android:id="@+id/maincontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_below="@id/maintoolbar">
+
+    </FrameLayout>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/maintoolbar"
-        android:background="@drawable/united"/>
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:theme="@style/Base.Theme.AppCompat.Light"
+        app:menu="@menu/bottom_nav_menu" />
 
 
 </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation__drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawe_menu_list"
+        app:headerLayout="@layout/drawer_layout"/>
+</android.support.v4.widget.DrawerLayout>

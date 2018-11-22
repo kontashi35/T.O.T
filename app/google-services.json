@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "285653761514-hfcq816mpl6ee84b8chsufekqt1vj0g1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blogspot.techtibet.tempapp",
+            "certificate_hash": "d0c64bf9051ade5fbb51cbadc6d035dd37f15dc8"
+          }
+        },
+        {
           "client_id": "285653761514-celfa277r4buvf7j4e3f4bpusmtimgsm.apps.googleusercontent.com",
           "client_type": 3
         }

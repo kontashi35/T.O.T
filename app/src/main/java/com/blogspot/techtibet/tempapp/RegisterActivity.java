@@ -1,31 +1,43 @@
 package com.blogspot.techtibet.tempapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -36,46 +48,43 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mConPassword;
 
     private Button mRegBtn;
-    private Button LogBtn;
     private Toolbar mToolbar;
     private ProgressDialog mProgress;
-    private TextView mPhoneBtn;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hide notification bar
         setContentView(R.layout.activity_register);
+
+
         mAuth=FirebaseAuth.getInstance();
         mStore=FirebaseFirestore.getInstance();
-        mEmail=(EditText)findViewById(R.id.regemail);
-        mPassword=(EditText)findViewById(R.id.regpassword);
-        mConPassword=(EditText)findViewById(R.id.regconpassword);
+        mEmail=findViewById(R.id.regemail);
+        mPassword=findViewById(R.id.regpassword);
+        mConPassword=findViewById(R.id.regconpassword);
 
-        mPhoneBtn=(TextView)findViewById(R.id.phonebtn);
-        mRegBtn=(Button)findViewById(R.id.regbtn);
-        LogBtn=(Button)findViewById(R.id.logbtn);
+        mRegBtn=findViewById(R.id.regbtn);
         mProgress=new ProgressDialog(this);
         mToolbar=(Toolbar)findViewById(R.id.regtoolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Register");
-        mProgress.setTitle("Creating");
-        mProgress.setMessage("wait dude its loading");
+        getSupportActionBar().setTitle(R.string.register_new_account_register_text);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String creating=getString(R.string.creating);
+        String message=getString(R.string.creating_message);
+        mProgress.setTitle(creating);
+        mProgress.setMessage(message);
+        mProgress.setIcon(R.drawable.playstore_icon);
+        mProgress.setCanceledOnTouchOutside(false);
 
-        mPhoneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(RegisterActivity.this,PhoneActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        LogBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
         mRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 mProgress.dismiss();
-                                                Toast.makeText(RegisterActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(RegisterActivity.this, R.string.code_sent, Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -114,23 +123,41 @@ public class RegisterActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RegisterActivity.this, "You got some error" + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, R.string.email_badly_format, Toast.LENGTH_LONG).show();
                                 mProgress.dismiss();
                             }
                         });
                     }else{
                         mProgress.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Password doest match,try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, R.string.password_should_match, Toast.LENGTH_SHORT).show();
                     }
 
 
             }
             else{
-                    Toast.makeText(RegisterActivity.this, "fill empty field", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, R.string.dont_leave_empty, Toast.LENGTH_LONG).show();
 
                 }
             }
         });
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user=mAuth.getCurrentUser();
+        if(user!=null){
+            sentTomain();
+        }
+    }
+
+    private void sentTomain() {
+        mProgress.dismiss();
+        Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

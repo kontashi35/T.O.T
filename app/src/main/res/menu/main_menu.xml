@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Add"
+    <item android:title="@string/add_menu"
         android:id="@+id/addbtn"
         android:icon="@mipmap/ic_addvideo"
         app:showAsAction="always"/>
@@ -11,10 +11,12 @@
         android:id="@+id/searchbtn"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search_mainmenu"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:visible="false"/>
     <item
         android:id="@+id/settingbtn"
-        android:title="@string/setting_main" />
+        android:title="@string/setting_main"
+        android:visible="true"/>
     <item
         android:id="@+id/logoutbtn"
         android:title="@string/logout_main" />

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rmain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blogspot.techtibet.tempapp.MainActivity">
@@ -32,92 +33,107 @@
                 app:uvv_scalable="true" />
 
         </FrameLayout>
-        <ProgressBar
-            android:id="@+id/video_buffer"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
-
-
 
 
     <RelativeLayout
         android:id="@+id/rellayout"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/relmain">
-        <RelativeLayout
-            android:layout_width="match_parent"
+        android:layout_below="@+id/relmain"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/play_video_name"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
-            <TextView
-                android:id="@+id/play_video_name"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="5dp"
-                android:text="new tibetan song 2018"
-                android:textColor="@android:color/white" />
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:text="@string/new_tibetan_song_2018_text"
+            android:textColor="@android:color/holo_blue_dark" />
 
-            <View
-                android:id="@+id/play_videodividerleft"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:layout_below="@+id/play_video_name"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/white" />
+        <View
+            android:id="@+id/play_videodividerleft"
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/play_video_name"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/holo_blue_dark" />
 
-            <View
-                android:id="@+id/play_videodividerright"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="3dp"
-                android:layout_below="@+id/play_video_name"
-                android:background="@android:color/white"
-                android:layout_marginRight="5dp"/>
+        <View
+            android:id="@+id/play_videodividerright"
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/play_video_name"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/holo_blue_dark" />
 
-            <TextView
-                android:id="@+id/play_video_uploader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/play_videodividerleft"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="2dp"
-                android:text="uploader"
-                android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/play_video_uploader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/play_videodividerleft"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/uploader_text"
+            android:textColor="@android:color/holo_blue_dark" />
 
-            <TextView
-                android:id="@+id/play_video_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_alignParentEnd="true"
-                android:text="date"
+        <TextView
+            android:id="@+id/play_video_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:text="@string/date_text"
 
-                android:textColor="@android:color/white" />
+            android:textColor="@android:color/holo_blue_dark" />
 
-            <TextView
-                android:id="@+id/play_view_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/play_videodividerright"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="2dp"
-                android:text="view count"
+        <TextView
+            android:id="@+id/play_view_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/play_videodividerright"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/view_count_text"
 
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
-
+            android:textColor="@android:color/holo_blue_dark" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/commentbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rellayout"
+        android:layout_marginStart="10dp"
+        android:text="@string/add_comment_text"
+        android:textColor="@android:color/holo_blue_bright" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/commentbtn"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rellayout"
+        android:layout_marginEnd="10dp"
+        android:text="@string/_0_comment_text"
+        android:textColor="@android:color/holo_blue_dark"/>
 
 </RelativeLayout>

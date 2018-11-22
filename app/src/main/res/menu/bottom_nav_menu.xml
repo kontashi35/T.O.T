@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/song_menu"
+        android:id="@+id/songbtn"
+        app:showAsAction="always"
+        android:icon="@mipmap/ic_music_video"/>
+    <item android:title="@string/comedy_menu"
+        android:id="@+id/comedybtn"
+        app:showAsAction="always"
+        android:icon="@mipmap/ic_comedy_video"/>
+</menu>

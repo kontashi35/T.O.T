@@ -6,12 +6,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
-        android:icon="@drawable/vinelogo"
+        android:icon="@mipmap/ic_mainlogo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/vinelogo"
+        android:roundIcon="@mipmap/ic_mainlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -21,11 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity"
-            android:parentActivityName=".RegisterActivity"/>
-        <activity android:name=".PhoneActivity"
-            android:parentActivityName=".RegisterActivity"/>
+        <activity android:name=".RegisterActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity
+            android:name=".LoginActivity"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".PhoneActivity"
+            android:parentActivityName=".RegisterActivity" />
         <activity
             android:name=".UploadActivity"
             android:parentActivityName=".MainActivity" />
@@ -35,9 +37,11 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".PlayActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            ></activity>
+        <activity
+            android:name=".PlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".MainApplication" />
     </application>
 
 </manifest>

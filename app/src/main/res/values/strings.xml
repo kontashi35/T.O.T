@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Tibetan Vines</string>
+    <string name="main_activity_to_en_button" translatable="false">English</string>
+
+    <string name="app_name" translatable="false">T.O.T</string>
     <string name="registerusername">Username</string>
     <string name="register_email">Email</string>
     <string name="register_password">Password</string>
@@ -8,7 +10,7 @@
     <string name="regemail">Email</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search_mainmenu">Search</string>
     <string name="setting_main">Setting</string>
     <string name="logout_main">Logout</string>
@@ -19,16 +21,16 @@
     <string name="login_email">Email</string>
     <string name="activty_verify_phone">verify phone</string>
     <string name="enter_phone_no">Enter phone no</string>
-    <string name="verify_code_image">verify code image</string>
+    <string name="verify_code_image" translatable="false">verify code image</string>
     <string name="login_or_register_with_phone">Login or register with phone</string>
     <string name="phone_send_code">Send code</string>
     <string name="phone_type_verification_code">type verification code</string>
     <string name="upload_video_file">Upload Video File</string>
     <string name="upload_thumbnail_activity">Upload Thumbnail</string>
     <string name="your_file_is_uploading">Your File is uploading</string>
-    <string name="filename_type_name">filename.type</string>
-    <string name="_0_0_upload">0/0</string>
-    <string name="_0_text_upload">0%</string>
+    <string name="filename_type_name" translatable="false">filename.type</string>
+    <string name="_0_0_upload" translatable="false">0/0</string>
+    <string name="_0_text_upload" translatable="false">0%</string>
     <string name="pause_upload_activity">Pause Upload</string>
     <string name="cancel_upload_activity">Cancel Upload</string>
     <string name="we_recommend_you_to_upload_short_nvideo_for_better_experiences">We recommend you to upload short video for better experiences</string>
@@ -36,5 +38,76 @@
     <string name="new_tibetan_song_2018_title">new tibetan song 2018</string>
     <string name="uploader_name_activity">uploader</string>
     <string name="date_date_activity">date</string>
-    <string name="view_count_number_text">view count</string>
+    <string name="view_count_number_text" translatable="false">views</string>
+    <string name="new_tibetan_song_2018_text">new tibetan song 2018</string>
+    <string name="uploader_text">uploader</string>
+    <string name="date_text">date</string>
+    <string name="view_count_text">views</string>
+    <string name="add_comment_text">Add Comment</string>
+    <string name="_0_comment_text">0 comment</string>
+    <string name="type_some_comment_text">type some comment</string>
+    <string name="comment_text_dialog">Comment</string>
+    <string name="cancel_dialog_text">Cancel</string>
+    <string name="username_text_here">Username</string>
+    <string name="_12_12_2018_date_text">12/12/2018</string>
+    <string name="this_is_the_best_video_comment_text">This is the best video</string>
+    <string name="login_as_a_guest_text">Login as a guest</string>
+    <string name="register_new_account_register_text">Register new account</string>
+    <string name="via_phone_register_text">via phone</string>
+    <string name="_text_login">Login or register</string>
+    <string name="_text">Confirm Password</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="user_profile_image" translatable="false">user profile image</string>
+    <string name="click_to_change_image">Click to change image</string>
+    <string name="save_btn">save</string>
+    <string name="username_text">Username</string>
+    <string name="tibetflag_image" translatable="false">tibetflag</string>
+    <string name="song_menu">Song</string>
+    <string name="comedy_menu">Comedy</string>
+    <string name="home_menu">Home</string>
+    <string name="profile_menu">Profile</string>
+    <string name="more_menu">More</string>
+    <string name="add_menu">Add</string>
+    <string name="en_text">En</string>
+    <string name="tb_text">Tb</string>
+    <string name="login_request_text">Please,Login first</string>
+    <string name="comment_text">Comment</string>
+    <string name="comment_added_text">Comment added</string>
+    <string name="loadind_text">Loading</string>
+    <string name="login_create_account_to_upload">Login or create new account to upload</string>
+    <string name="resume_upload_activity">Resume Upload</string>
+    <string name="thumbnail_uploaded_succeed">Thumbnail, Uploaded successfully</string>
+    <string name="select_file_to_upload">Select file to upload</string>
+    <string name="select_video_file_to_upload">Please select video file to upload</string>
+    <string name="video_upload_successfully">File upload successfully</string>
+    <string name="change_language_text">Change langauge</string>
+    <string name="english_text">English</string>
+    <string name="tibetan_text">Tibetan</string>
+    <string name="verify_text">Verifying</string>
+    <string name="enter_verify_code">Enter the code to verify</string>
+    <string name="dont_leave_empty">Please,fill out the empty filed</string>
+    <string name="verify_code">Verify Code</string>
+    <string name="code_sent">code sent</string>
+    <string name="phone">Phone</string>
+    <string name="login_text">Login</string>
+    <string name="please_verify_email">Please verify email to log in</string>
+    <string name="password_should_match">Password does\'t match,try again</string>
+    <string name="creating">Creating</string>
+    <string name="creating_message">Please wait while its Loading</string>
+    <string name="uploading_text">Uploading</string>
+    <string name="wait_while_upload">Please wait while profile is uploading!</string>
+    <string name="guest_text">User Authenticated with anonymous</string>
+    <string name="profile_updated">Profile Updated Successfully</string>
+    <string name="select_file_type">Select file type</string>
+    <string name="upload_song">Upload song</string>
+    <string name="upload_comedy">Upload comedy</string>
+    <string name="loading_text">Please,wait while it loading</string>
+    <string name="loggin_in_text">Logging in</string>
+    <string name="wait_while_loggin_in_text">Wait while processing</string>
+    <string name="login_error_text">Login error</string>
+    <string name="email_badly_format">Email is badly format</string>
+    <string name="tale_of_tibet_text">Tale of Tibet</string>
+    <string name="logo_in_home_text" translatable="false">logo in home</string>
+    <string name="privacy_policy_text" translatable="false">Privacy Policy</string>
 </resources>
